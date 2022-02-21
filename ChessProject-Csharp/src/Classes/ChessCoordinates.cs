@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 
-namespace src.Classes
+namespace SolarWinds.MSP.Chess
 {
     public class ChessCoordinates
     {
@@ -28,6 +28,10 @@ namespace src.Classes
                 {
                     _x = value;
                 }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "X coordinate must be in the range from 0 to 7.");
+                }
             }
         }
 
@@ -40,6 +44,10 @@ namespace src.Classes
                 if (value is >= 0 and <= 7)
                 {
                     _y = value;
+                } 
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Y coordinate must be in the range from 0 to 7.");
                 }
             }
         }

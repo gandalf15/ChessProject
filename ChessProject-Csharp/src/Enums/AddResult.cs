@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace SolarWinds.MSP.Chess
 {
-    public enum MoveResult
+    public enum AddResult
     {
-        Moved,
-        Avalilable,
-        Blocked,
-        NotValidMove
+        Success,
+        CoordinatesOccupied,
+        MaxNumberReached
     }
 }

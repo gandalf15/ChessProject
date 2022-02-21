@@ -26,86 +26,49 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
-        public void IsLegalBoardPosition_True_X_equals_0_Y_equals_0()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(0, 0);
-            Assert.IsTrue(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_True_X_equals_5_Y_equals_5()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(5, 5);
-            Assert.IsTrue(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_False_X_equals_11_Y_equals_5()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(11, 5);
-            Assert.IsFalse(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_False_X_equals_0_Y_equals_9()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(0, 9);
-            Assert.IsFalse(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_False_X_equals_11_Y_equals_0()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(11, 0);
-            Assert.IsFalse(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_False_For_Negative_X_Values()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(-1, 5);
-            Assert.IsFalse(isValidPosition);
-        }
-
-        [Test]
-        public void IsLegalBoardPosition_False_For_Negative_Y_Values()
-        {
-            var isValidPosition = _chessBoard.IsLegalBoardPosition(5, -1);
-            Assert.IsFalse(isValidPosition);
-        }
-
-        [Test]
         public void Avoids_Duplicate_Positioning()
         {
-            var firstPawn = new Pawn(PieceColor.Black);
-            var secondPawn = new Pawn(PieceColor.Black);
-            _chessBoard.Add(firstPawn, 6, 3, PieceColor.Black);
-            _chessBoard.Add(secondPawn, 6, 3, PieceColor.Black);
-            Assert.AreEqual(firstPawn.XCoordinate, 6);
-            Assert.AreEqual(firstPawn.YCoordinate, 3);
-            Assert.AreEqual(secondPawn.XCoordinate, -1);
-            Assert.AreEqual(secondPawn.YCoordinate, -1);
+            var firstPawn = new Pawn(ChessPieceColor.Black);
+            var secondPawn = new Pawn(ChessPieceColor.Black);
+            var firstResult = _chessBoard.Add(firstPawn, new ChessCoordinates(6,3));
+            Assert.AreEqual(firstResult, AddResult.Success);
+            var secondResult = _chessBoard.Add(secondPawn, new ChessCoordinates(6, 3));
+            Assert.AreEqual(secondResult, AddResult.CoordinatesOccupied);
+            Assert.AreEqual(firstPawn.Coordinates.X, 6);
+            Assert.AreEqual(firstPawn.Coordinates.Y, 3);
+            Assert.AreEqual(secondPawn.Coordinates, null);
         }
 
         [Test]
-        public void Limits_The_Number_Of_Pawns()
+        public void Check_If_Coordinates_Occupied()
         {
-            for (var i = 0; i < 10; i++)
-            {
-                var pawn = new Pawn(PieceColor.Black);
-                var row = i / ChessBoard.MaxBoardWidth;
-                _chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
-                if (row < 1)
-                {
-                    Assert.AreEqual(pawn.XCoordinate, (6 + row));
-                    Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
-                }
-                else
-                {
-                    Assert.AreEqual(pawn.XCoordinate, -1);
-                    Assert.AreEqual(pawn.YCoordinate, -1);
-                }
-            }
+            var occupied = _chessBoard.IsOccupied(new ChessCoordinates(6,3));
+            Assert.False(occupied);
+            var pawn = new Pawn(ChessPieceColor.Black);
+            _chessBoard.Add(pawn, new ChessCoordinates(6, 3));
+            occupied = _chessBoard.IsOccupied(new ChessCoordinates(6, 3));
+            Assert.True(occupied);
         }
+
+        //[Test]
+        //public void Limits_The_Number_Of_Pawns()
+        //{
+        //    for (var i = 0; i < 10; i++)
+        //    {
+        //        var pawn = new Pawn(ChessPieceColor.Black);
+        //        var row = i / ChessBoard.MaxBoardWidth;
+        //        _chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, ChessPieceColor.Black);
+        //        if (row < 1)
+        //        {
+        //            Assert.AreEqual(pawn.XCoordinate, (6 + row));
+        //            Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
+        //        }
+        //        else
+        //        {
+        //            Assert.AreEqual(pawn.XCoordinate, -1);
+        //            Assert.AreEqual(pawn.YCoordinate, -1);
+        //        }
+        //    }
+        //}
     }
 }

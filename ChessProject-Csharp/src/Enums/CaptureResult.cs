@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SolarWinds.MSP.Chess
 {
-    public enum MoveResult
+    public enum CaptureResult
     {
-        Moved,
+        Captured,
         Avalilable,
         Blocked,
-        NotValidMove
+        NotValidCapture
     }
 }

@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using SolarWinds.MSP.Chess;
 
-namespace src.Classes
+namespace SolarWinds.MSP.Chess
 {
     public abstract class ChessPiece
     {
-        private int _xCoordinate;
-        private int _yCoordinate;
-        private readonly PieceColor _pieceColor;
+        public virtual ChessCoordinates Coordinates { get; set; }
+        public ChessPieceColor PieceColor { get; init; }
 
-        protected ChessPiece(PieceColor pieceColor)
+        protected ChessPiece(ChessPieceColor pieceColor)
         {
-            _pieceColor = pieceColor;
+            PieceColor = pieceColor;
         }
 
-        public abstract bool Move(MovementType movementType, int newX, int newY);
+        public abstract MoveResult ValidateMove(ChessCoordinates destination, bool[,] boardOccupancy);
+        public abstract CaptureResult ValidateCapture(ChessCoordinates destination, bool[,] boardOccupancy);
 
         public override string ToString()
         {
@@ -26,7 +26,9 @@ namespace src.Classes
         }
         protected string CurrentPositionAsString()
         {
-            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, _xCoordinate, _yCoordinate, _pieceColor);
+            var colorName = Enum.GetName(PieceColor);
+            if (Coordinates is null) return $"No coordinates set.{Environment.NewLine}Piece Color: {colorName}";
+            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, Coordinates.X, Coordinates.Y, colorName);
         }
     }
 }
