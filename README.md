@@ -1,26 +1,9 @@
-# SolarWinds MSP Technical Exercise - ChessProject
+#Notes
 
-Welcome to the technical exercise used to assess candidates for Developer roles at SolarWinds MSP.
-
-You can carry out this exercise in your own time, in your IDE of choice.
-
-This project will give you a chance to demonstrate your skills in a variety of different methodologies.
-Some of the things we think are important:
-
-* Clean Code
-* Unit Tests/Test-driven Development (TDD)
-* Design patterns
-* Refactoring
-
-## Instructions
-
-1. Fork the repository into your own github account   
-2. Choose which language you are most comfortable completing this in - you have a choice of PHP, Java, C#  
-3. Read and follow the [instructions](INSTRUCTIONS.md) for the project
-4. Commit updated code to your repo for the project
-5. Create a pull request with your changes against our master branch
-6. Email [grant.meldrum@solarwinds.com](mailto:grant.meldrum@solarwinds.com?subject=Developer%20ChessProject%20Completed) and let him know you have created the pull request 
-
-Timescales - as a rough guide please aim to get this back to us within 1 week of starting the project, but we do understand that life gets in the way sometimes!
-
-__Any questions please get in touch with [Grant](mailto:grant.meldrum@solarwinds.com?subject=Developer%20ChessProject) in the recruitment team.__
+1. I followed the [instructions](INSTRUCTIONS.md) for the project. However, I changed the methods signatures and I had to write new unit tests.
+1. For any new project I would always choose the latest long term support, if there is no valid reason/requirement to use older version. Upgraded to .Net 6.0 because it is latest long term support (LTS) release. It support ends on November 08, 2024. For more details see [this link](https://github.com/dotnet/core/blob/main/releases.md) and [release notes](https://devblogs.microsoft.com/dotnet/announcing-net-6/).
+1. It is very important to use some code style. I decided to use [Google C# style guide](https://google.github.io/styleguide/csharp-style.html).
+1. It was not specified, but I assumed the game should conform to the official chess rules from [FIDE](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf).
+1. Based on the FIDE rules a pawn can advance two squares in one move. See the section 3.7b. This can be only from the starting position and both squares need to be empty.
+1. UML diagrams were drawn using [Dia](http://dia-installer.de/index.html.en).
+1. 
