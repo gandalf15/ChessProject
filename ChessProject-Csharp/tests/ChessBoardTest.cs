@@ -207,8 +207,8 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
-        [TestCaseSource(typeof(AllWhitePawnValidMoves))]
-        public void Should_be_able_to_do_valid_moves_with_White_Pawn(ChessCoordinates from, ChessCoordinates to)
+        [TestCaseSource(typeof(AllWhitePawnValidMovesByOne))]
+        public void Should_be_able_to_do_valid_move_by_one_square_with_White_Pawn(ChessCoordinates from, ChessCoordinates to)
         {
             var pawn = new Pawn(ChessPieceColor.White);
             _chessBoard.Add(pawn, from);
@@ -217,8 +217,8 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
-        [TestCaseSource(typeof(AllBlackPawnValidMoves))]
-        public void Should_be_able_to_do_valid_moves_with_Black_Pawn(ChessCoordinates from, ChessCoordinates to)
+        [TestCaseSource(typeof(AllBlackPawnValidMovesByOne))]
+        public void Should_be_able_to_do_valid_move_by_one_square_with_Black_Pawn(ChessCoordinates from, ChessCoordinates to)
         {
             var pawn = new Pawn(ChessPieceColor.Black);
             _chessBoard.Add(pawn, from);
@@ -226,19 +226,119 @@ namespace SolarWinds.MSP.Chess
             Assert.AreEqual(MoveResult.Moved, result);
         }
 
-    }
-
-    internal class AllChessBoardCoordinates : IEnumerable
-    {
-        public IEnumerator GetEnumerator()
+        [Test]
+        [TestCaseSource(typeof(AllWhitePawnValidMovesByTwo))]
+        public void Should_be_able_to_Move_by_two_squares_from_starting_Coordinates_with_White_Pawn(ChessCoordinates from, ChessCoordinates to)
         {
-            for (var i = 0; i <= 63; i++)
-            {
-                var x = i / ChessBoard.MaxBoardWidth; // implicit floor
-                var y = i % ChessBoard.MaxBoardWidth;
-                yield return new ChessCoordinates(x, y);
-            }
+            var pawn = new Pawn(ChessPieceColor.White);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.Moved, result);
         }
+
+        [Test]
+        [TestCaseSource(typeof(AllBlackPawnValidMovesByTwo))]
+        public void Should_be_able_to_Move_by_two_squares_from_starting_Coordinates_with_Black_Pawn(ChessCoordinates from, ChessCoordinates to)
+        {
+            var pawn = new Pawn(ChessPieceColor.Black);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.Moved, result);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(AllWhitePawnInvalidMovesByTwo))]
+        public void Should_not_be_able_to_Move_by_two_squares_from_non_starting_Coordinates_with_White_Pawn(ChessCoordinates from, ChessCoordinates to)
+        {
+            var pawn = new Pawn(ChessPieceColor.White);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(AllBlackPawnInvalidMovesByTwo))]
+        public void Should_not_be_able_to_Move_by_two_squares_from_non_starting_Coordinates_with_Black_Pawn(ChessCoordinates from, ChessCoordinates to)
+        {
+            var pawn = new Pawn(ChessPieceColor.Black);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
+        [Test]
+        [TestCase(ChessPieceColor.White)]
+        [TestCase(ChessPieceColor.Black)]
+        public void Should_not_be_able_to_Move_Pawn_if_Blocked(ChessPieceColor color)
+        {
+            var backPawn = new Pawn(color);
+            var frontPawn = new Pawn(color);
+            var backCoordinates = new ChessCoordinates(1, 1);
+            var frontCoordinates = new ChessCoordinates(2, 1);
+            if (color is ChessPieceColor.Black)
+            {
+                backCoordinates.X = 2;
+                frontCoordinates.X = 1;
+            }
+            _chessBoard.Add(backPawn, frontCoordinates);
+            _chessBoard.Add(frontPawn, backCoordinates);
+            var result = _chessBoard.Move(backCoordinates, frontCoordinates);
+            Assert.AreEqual(MoveResult.Blocked, result);
+        }
+
+        [Test]
+        [TestCase(ChessPieceColor.White)]
+        [TestCase(ChessPieceColor.Black)]
+        public void Should_not_be_able_to_Move_Pawn_left(ChessPieceColor color)
+        {
+            var pawn = new Pawn(color);
+            var from = new ChessCoordinates(1, 1);
+            var to = new ChessCoordinates(1, 0);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
+        [Test]
+        [TestCase(ChessPieceColor.White)]
+        [TestCase(ChessPieceColor.Black)]
+        public void Should_not_be_able_to_Move_Pawn_right(ChessPieceColor color)
+        {
+            var pawn = new Pawn(color);
+            var from = new ChessCoordinates(1, 0);
+            var to = new ChessCoordinates(1, 1);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
+        [Test]
+        [TestCase(ChessPieceColor.White)]
+        [TestCase(ChessPieceColor.Black)]
+        public void Should_not_be_able_to_Move_Pawn_backwards(ChessPieceColor color)
+        {
+            var pawn = new Pawn(color);
+            var from = new ChessCoordinates(2, 0);
+            var to = new ChessCoordinates(1, 0);
+            if (color is ChessPieceColor.Black)
+            {
+                (from, to) = (to, from);
+            }
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(AllInvalidDiagonalPawnMoves))]
+        public void Should_not_be_able_to_Move_White_Pawn_diagonal(ChessCoordinates from, ChessCoordinates to)
+        {
+            var pawn = new Pawn(ChessPieceColor.White);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
     }
 
     internal class AllWhitePawnChessBoardCoordinates : IEnumerable
@@ -288,7 +388,7 @@ namespace SolarWinds.MSP.Chess
         }
     }
 
-    internal class AllWhitePawnValidMoves : IEnumerable
+    internal class AllWhitePawnValidMovesByOne : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {
@@ -304,7 +404,39 @@ namespace SolarWinds.MSP.Chess
         }
     }
 
-    internal class AllBlackPawnValidMoves : IEnumerable
+    internal class AllWhitePawnValidMovesByTwo : IEnumerable
+    {
+        public IEnumerator GetEnumerator()
+        {
+            for (var i = 8; i <= 15; i++)
+            {
+                var x = i / ChessBoard.MaxBoardWidth; // implicit floor
+                var y = i % ChessBoard.MaxBoardWidth;
+                var from = new ChessCoordinates(x, y);
+                var to = new ChessCoordinates(x + 2, y);
+                var coordinates = new ChessCoordinates[] { from, to };
+                yield return coordinates;
+            }
+        }
+    }
+
+    internal class AllWhitePawnInvalidMovesByTwo : IEnumerable
+    {
+        public IEnumerator GetEnumerator()
+        {
+            for (var i = 16; i <= 47; i++)
+            {
+                var x = i / ChessBoard.MaxBoardWidth; // implicit floor
+                var y = i % ChessBoard.MaxBoardWidth;
+                var from = new ChessCoordinates(x, y);
+                var to = new ChessCoordinates(x + 2, y);
+                var coordinates = new ChessCoordinates[] { from, to };
+                yield return coordinates;
+            }
+        }
+    }
+
+    internal class AllBlackPawnValidMovesByOne : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {
@@ -314,6 +446,53 @@ namespace SolarWinds.MSP.Chess
                 var y = i % ChessBoard.MaxBoardWidth;
                 var from = new ChessCoordinates(x, y);
                 var to = new ChessCoordinates(x - 1, y);
+                var coordinates = new ChessCoordinates[] { from, to };
+                yield return coordinates;
+            }
+        }
+    }
+
+    internal class AllBlackPawnValidMovesByTwo : IEnumerable
+    {
+        public IEnumerator GetEnumerator()
+        {
+            for (var i = 55; i >= 48; i--)
+            {
+                var x = i / ChessBoard.MaxBoardWidth; // implicit floor
+                var y = i % ChessBoard.MaxBoardWidth;
+                var from = new ChessCoordinates(x, y);
+                var to = new ChessCoordinates(x - 2, y);
+                var coordinates = new ChessCoordinates[] { from, to };
+                yield return coordinates;
+            }
+        }
+    }
+
+    internal class AllBlackPawnInvalidMovesByTwo : IEnumerable
+    {
+        public IEnumerator GetEnumerator()
+        {
+            for (var i = 47; i >= 16; i--)
+            {
+                var x = i / ChessBoard.MaxBoardWidth; // implicit floor
+                var y = i % ChessBoard.MaxBoardWidth;
+                var from = new ChessCoordinates(x, y);
+                var to = new ChessCoordinates(x - 2, y);
+                var coordinates = new ChessCoordinates[] { from, to };
+                yield return coordinates;
+            }
+        }
+    }
+
+    internal class AllInvalidDiagonalPawnMoves : IEnumerable
+    {
+        public IEnumerator GetEnumerator()
+        {
+            var diagonalMoves = new int[,] { { 2, 0 }, { 2, 2 }, { 1, 0 }, { 1, 2 } };
+            var from = new ChessCoordinates(2, 1);
+            for (int i = 0; i < diagonalMoves.GetLength(0); i++)
+            {
+                var to = new ChessCoordinates(diagonalMoves[i, 0], diagonalMoves[i, 1]);
                 var coordinates = new ChessCoordinates[] { from, to };
                 yield return coordinates;
             }
