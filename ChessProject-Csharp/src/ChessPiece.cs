@@ -4,7 +4,7 @@ using SolarWinds.MSP.Chess.Enums;
 namespace SolarWinds.MSP.Chess
 {
     /// <summary>
-    ///  ChessPiece: Represents a chess piece and provide basic functionality.
+    ///  Represents a chess piece and provide basic functionality.
     /// </summary> 
     public abstract class ChessPiece
     {
@@ -19,17 +19,34 @@ namespace SolarWinds.MSP.Chess
         public ChessPieceColor PieceColor { get; init; }
 
         /// <summary>
-        /// 
+        /// Initializes the color of a ChessPiece.
         /// </summary>
-        /// <param name="pieceColor"></param>
+        /// <param name="pieceColor">ChessPieceColor that represents the color of a chess piece.</param>
         protected ChessPiece(ChessPieceColor pieceColor)
         {
             PieceColor = pieceColor;
         }
 
+        /// <summary>
+        /// Abstract method that validates a move.
+        /// </summary>
+        /// <param name="destination">ChessCoordinates destination of the move.</param>
+        /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
+        /// <returns></returns>
         public abstract MoveResult ValidateMove(ChessCoordinates destination, bool[,] boardOccupancy);
+
+        /// <summary>
+        /// Abstract method that validates a capture move. 
+        /// </summary>
+        /// <param name="destination">ChessCoordinates destination of the capture move.</param>
+        /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
+        /// <returns></returns>
         public abstract CaptureResult ValidateCapture(ChessCoordinates destination, bool[,] boardOccupancy);
 
+        /// <summary>
+        /// Textual description of a ChessPiece instance.
+        /// </summary>
+        /// <returns>String that describes a ChessPiece instance.</returns>
         public override string ToString()
         {
             var colorName = Enum.GetName(PieceColor);
