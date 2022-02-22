@@ -339,5 +339,15 @@ namespace SolarWinds.MSP.Chess
             Assert.AreEqual(MoveResult.NotValidMove, result);
         }
 
+        [Test]
+        [TestCaseSource(typeof(AllInvalidDiagonalPawnMoves))]
+        public void Should_not_be_able_to_Move_Black_Pawn_diagonal(ChessCoordinates from, ChessCoordinates to)
+        {
+            var pawn = new Pawn(ChessPieceColor.Black);
+            _chessBoard.Add(pawn, from);
+            var result = _chessBoard.Move(from, to);
+            Assert.AreEqual(MoveResult.NotValidMove, result);
+        }
+
     }
 }

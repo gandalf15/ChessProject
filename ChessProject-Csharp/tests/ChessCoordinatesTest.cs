@@ -21,6 +21,12 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
+        public void Should_not_be_able_to_create_ChessCoordinate_with_negative_X_and_Y_value()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ChessCoordinates(-1, -1));
+        }
+
+        [Test]
         public void Should_not_be_able_to_create_ChessCoordinate_with_X_value_greater_than_7()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new ChessCoordinates(8, 0));
@@ -30,6 +36,12 @@ namespace SolarWinds.MSP.Chess
         public void Should_not_be_able_to_create_ChessCoordinate_with_Y_value_greater_than_7()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new ChessCoordinates(0, 8));
+        }
+
+        [Test]
+        public void Should_not_be_able_to_create_ChessCoordinate_with_X_and_Y_values_greater_than_7()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ChessCoordinates(8, 8));
         }
 
         [Test]
