@@ -3,6 +3,9 @@ using SolarWinds.MSP.Chess.Enums;
 
 namespace SolarWinds.MSP.Chess
 {
+    /// <summary>
+    /// Represents a chess board and it is responsible for maintaining its state.
+    /// </summary>
     public class ChessBoard
     {
         public const int MaxBoardWidth = 8;
@@ -12,12 +15,21 @@ namespace SolarWinds.MSP.Chess
         private int _numberOfWhitePawns = 0;
         private int _numberOfBlackPawns = 0;
 
+        /// <summary>
+        /// Creates ChessBoard.
+        /// </summary>
         public ChessBoard()
         {
-            // It needs 8 squares in each direction. From index 0 up to 7.
             _pieces = new ChessPiece[MaxBoardWidth, MaxBoardHeight];
         }
 
+        /// <summary>
+        /// Adds a ChessPiece to the ChessBoard at a specific ChessCoordinates.
+        /// </summary>
+        /// <param name="piece">ChessPiece to be added.</param>
+        /// <param name="coordinates">Coordinates where to add a ChessPiece.</param>
+        /// <returns>AddResult</returns>
+        /// <exception cref="ArgumentException">If unknown ChessPiece is provided.</exception>
         public AddResult Add(ChessPiece piece, ChessCoordinates coordinates)
         {
             if (_pieces[coordinates.X, coordinates.Y] is not null) return AddResult.CoordinatesOccupied;
@@ -29,6 +41,12 @@ namespace SolarWinds.MSP.Chess
                     throw new ArgumentException("The piece is of an unknown type.", nameof(piece));
             }
         }
+
+        /// <summary>
+        /// Removes a ChessPiece from the ChessBoard.
+        /// </summary>
+        /// <param name="coordinates">ChessCoordinates from where to remove a ChessPiece.</param>
+        /// <returns>The removed ChessPiece.</returns>
         public ChessPiece Remove(ChessCoordinates coordinates)
         {
             var piece = _pieces[coordinates.X, coordinates.Y];
@@ -37,6 +55,12 @@ namespace SolarWinds.MSP.Chess
             return piece;
         }
 
+        /// <summary>
+        /// Moves a ChessPiece from ChessCoordinates to ChessCoordinates if it is a valid move.
+        /// </summary>
+        /// <param name="from">ChessCoordinates from where to move a ChessPiece.</param>
+        /// <param name="to">Destination ChessCoordinates where to move a ChessPiece.</param>
+        /// <returns>MoveResult</returns>
         public MoveResult Move(ChessCoordinates from, ChessCoordinates to)
         {
             var piece = _pieces[from.X, from.Y];
@@ -51,6 +75,11 @@ namespace SolarWinds.MSP.Chess
             return MoveResult.Moved;
         }
 
+        /// <summary>
+        /// Checks if a ChessCoordinates on the ChessBoard is occupied.
+        /// </summary>
+        /// <param name="coordinates">ChessCoordinates to check.</param>
+        /// <returns>True if occupied.</returns>
         public bool IsOccupied(ChessCoordinates coordinates) => _pieces[coordinates.X, coordinates.Y] is not null;
 
         private bool[,] BoardOccupancyState()
@@ -62,6 +91,13 @@ namespace SolarWinds.MSP.Chess
             return state;
         }
 
+        /// <summary>
+        /// Adds Pawn to a ChessBoard.
+        /// </summary>
+        /// <param name="pawn">Pawn to be added.</param>
+        /// <param name="coordinates">ChessCoordinates where to add the Pawn.</param>
+        /// <returns>AddResult</returns>
+        /// <exception cref="ArgumentException">If a Pawn of unknown ChessPieceColor is provided.</exception>
         private AddResult AddPawn(Pawn pawn, ChessCoordinates coordinates)
         {
             switch (pawn.PieceColor)
