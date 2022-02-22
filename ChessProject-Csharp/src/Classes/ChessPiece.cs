@@ -28,7 +28,8 @@ namespace SolarWinds.MSP.Chess
         {
             var colorName = Enum.GetName(PieceColor);
             if (Coordinates is null) return $"No coordinates set.{Environment.NewLine}Piece Color: {colorName}";
-            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, Coordinates.X, Coordinates.Y, colorName);
+            return string.Format("Piece: {4}{0}Coordinates: (X: {1}, Y: {2}){0}Piece Color: {3}", 
+                Environment.NewLine, Coordinates.X, Coordinates.Y, colorName, this.GetType().Name);
         }
     }
 }
