@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace SolarWinds.MSP.Chess
+namespace SolarWinds.MSP.Chess.Tests
 {
     internal class AllWhitePawnChessBoardCoordinates : IEnumerable
     {

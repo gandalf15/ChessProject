@@ -1,4 +1,4 @@
-﻿namespace SolarWinds.MSP.Chess
+﻿namespace SolarWinds.MSP.Chess.Enums
 {
     public enum ChessPieceColor
     {

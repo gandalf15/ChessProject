@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using SolarWinds.MSP.Chess.Enums;
 
-namespace SolarWinds.MSP.Chess
+namespace SolarWinds.MSP.Chess.Tests
 {
     [TestFixture]
     public class ChessBoardTest
@@ -75,7 +75,7 @@ namespace SolarWinds.MSP.Chess
         {
             var firstPawn = new Pawn(color);
             var secondPawn = new Pawn(color);
-            var firstResult = _chessBoard.Add(firstPawn, new ChessCoordinates(1, 1));
+            _chessBoard.Add(firstPawn, new ChessCoordinates(1, 1));
             var secondResult = _chessBoard.Add(secondPawn, new ChessCoordinates(1, 1));
             Assert.AreEqual(AddResult.CoordinatesOccupied, secondResult);
             Assert.AreEqual(null, secondPawn.Coordinates);
@@ -108,7 +108,7 @@ namespace SolarWinds.MSP.Chess
             var coordinates = new ChessCoordinates(1, 0);
             for (var i = 0; i <= 7; i++)
             {
-                var pawn = new Pawn(ChessPieceColor.White);
+                var pawn = new Pawn(color);
                 coordinates.Y = i;
                 var result = _chessBoard.Add(pawn, coordinates);
                 Assert.AreEqual(AddResult.Success, result);

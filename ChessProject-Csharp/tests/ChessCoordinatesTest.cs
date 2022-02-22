@@ -1,12 +1,12 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace SolarWinds.MSP.Chess
+namespace SolarWinds.MSP.Chess.Tests
 {
     [TestFixture]
     public class ChessCoordinatesTest
     {
-        private static int[] _allowedCoordinatesRange = { 0, 1, 2, 3, 4, 5, 6, 7 };
+        private static readonly int[] AllowedCoordinatesRange = { 0, 1, 2, 3, 4, 5, 6, 7 };
 
         [Test]
         public void Should_not_be_able_to_create_ChessCoordinate_with_negative_X_value()
@@ -45,7 +45,7 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
-        [TestCaseSource(nameof(_allowedCoordinatesRange))]
+        [TestCaseSource(nameof(AllowedCoordinatesRange))]
         public void Should_be_able_to_create_ChessCoordinate_with_X_value_in_range_0_up_to_7(int x)
         {
             var coordinates = new ChessCoordinates(x, 0);
@@ -53,7 +53,7 @@ namespace SolarWinds.MSP.Chess
         }
 
         [Test]
-        [TestCaseSource(nameof(_allowedCoordinatesRange))]
+        [TestCaseSource(nameof(AllowedCoordinatesRange))]
         public void Should_be_able_to_create_ChessCoordinate_with_Y_value_in_range_0_up_to_7(int y)
         {
             var coordinates = new ChessCoordinates(0, y);

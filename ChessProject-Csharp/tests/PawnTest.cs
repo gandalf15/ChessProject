@@ -1,7 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
+using SolarWinds.MSP.Chess.Enums;
 
-namespace SolarWinds.MSP.Chess
+namespace SolarWinds.MSP.Chess.Tests
 {
     [TestFixture]
     public class PawnTest
@@ -37,8 +38,7 @@ namespace SolarWinds.MSP.Chess
         [Test]
         public void Pawn_be_printed_nicely()
         {
-            var pawn = new Pawn(ChessPieceColor.White);
-            pawn.Coordinates = new ChessCoordinates(1, 2);
+            var pawn = new Pawn(ChessPieceColor.White){Coordinates = new ChessCoordinates(1,2)};
             var expected = string.Format("Piece: Pawn{0}Coordinates: (X: 1, Y: 2){0}Piece Color: White", Environment.NewLine);
             Assert.AreEqual(expected, pawn.ToString());
             TestContext.Out.WriteLine(pawn);
@@ -129,7 +129,7 @@ namespace SolarWinds.MSP.Chess
         {
             var from = new ChessCoordinates(1, 1);
             var to = new ChessCoordinates(1, 0);
-            var pawn = new Pawn(color) { Coordinates = to };
+            var pawn = new Pawn(color) { Coordinates = from };
             var result = pawn.ValidateMove(to, _boardOccupancy);
             Assert.AreEqual(MoveResult.NotValidMove, result);
         }
@@ -141,7 +141,7 @@ namespace SolarWinds.MSP.Chess
         {
             var from = new ChessCoordinates(1, 1);
             var to = new ChessCoordinates(1, 2);
-            var pawn = new Pawn(color) { Coordinates = to };
+            var pawn = new Pawn(color) { Coordinates = from };
             var result = pawn.ValidateMove(to, _boardOccupancy);
             Assert.AreEqual(MoveResult.NotValidMove, result);
         }
@@ -156,7 +156,7 @@ namespace SolarWinds.MSP.Chess
             var pawn = new Pawn(color){Coordinates = from};
             if (color is ChessPieceColor.Black)
             {
-                (from, to) = (to, from);
+                to = from;
             }
             var result = pawn.ValidateMove(to, _boardOccupancy);
             Assert.AreEqual(MoveResult.NotValidMove, result);
