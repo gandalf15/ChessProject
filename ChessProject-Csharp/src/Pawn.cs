@@ -3,10 +3,23 @@ using SolarWinds.MSP.Chess.Enums;
 
 namespace SolarWinds.MSP.Chess
 {
+    /// <summary>
+    /// Represents a Pawn chess piece.
+    /// </summary>
     public sealed class Pawn : ChessPiece
     {
+        /// <summary>
+        /// Creates a Pawn of a specific color.
+        /// </summary>
+        /// <param name="pieceColor">ChessPieceColor of the Pawn.</param>
         public Pawn(ChessPieceColor pieceColor) : base(pieceColor) { }
 
+        /// <summary>
+        /// Validates a move
+        /// </summary>
+        /// <param name="destination">ChessCoordinates destination of the move.</param>
+        /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
+        /// <returns>MoveResult</returns>
         public override MoveResult ValidateMove(ChessCoordinates destination, bool[,] boardOccupancy)
         {
             // Check if not moving sideways.
@@ -50,6 +63,13 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination">ChessCoordinates destination of the capture move.</param>
+        /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
+        /// <returns>CaptureResult</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override CaptureResult ValidateCapture(ChessCoordinates destination, bool[,] boardOccupancy)
         {
             throw new NotImplementedException("CaptureResult method for Pawn is not implemented.");
