@@ -10,6 +10,7 @@ namespace SolarWinds.MSP.Chess
     {
         Success,
         CoordinatesOccupied,
-        MaxNumberReached
+        MaxNumberReached,
+        NotValidPositionForThisPiece
     }
 }

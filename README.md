@@ -6,4 +6,5 @@
 1. It was not specified, but I assumed the game should conform to the official chess rules from [FIDE](https://www.fide.com/FIDE/handbook/LawsOfChess.pdf).
 1. Based on the FIDE rules a pawn can advance two squares in one move. See the section 3.7b. This can be only from the starting position and both squares need to be empty.
 1. UML diagrams were drawn using [Dia](http://dia-installer.de/index.html.en).
+1. For designing unit tests I followed [the article "Unit testing best practices with .NET Core and .NET Standard"](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices).
 1. 

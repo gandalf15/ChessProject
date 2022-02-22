@@ -5,14 +5,15 @@ namespace SolarWinds.MSP.Chess
 {
     public class ChessBoard
     {
-        public const int MaxBoardWidth = 7;
-        public const int MaxBoardHeight = 7;
+        public const int MaxBoardWidth = 8;
+        public const int MaxBoardHeight = 8;
         public const int MaxNumberOfPawns = 8;
         private readonly ChessPiece[,] _pieces;
         private int _numberOfWhitePawns = 0;
         private int _numberOfBlackPawns = 0;
         public ChessBoard()
         {
+            // It needs 8 squares in each direction. From index 0 up to 7.
             _pieces = new ChessPiece[MaxBoardWidth, MaxBoardHeight];
         }
 
@@ -66,6 +67,7 @@ namespace SolarWinds.MSP.Chess
             {
                 case ChessPieceColor.White:
                     if (_numberOfWhitePawns >= MaxNumberOfPawns) return AddResult.MaxNumberReached;
+                    if (coordinates.X == 0) return AddResult.NotValidPositionForThisPiece;
                     _numberOfWhitePawns++;
                     pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y);
                     _pieces[coordinates.X, coordinates.Y] = pawn;
@@ -73,6 +75,7 @@ namespace SolarWinds.MSP.Chess
 
                 case ChessPieceColor.Black:
                     if (_numberOfBlackPawns >= MaxNumberOfPawns) return AddResult.MaxNumberReached;
+                    if (coordinates.X == 7) return AddResult.NotValidPositionForThisPiece;
                     _numberOfBlackPawns++;
                     pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y); 
                     _pieces[coordinates.X, coordinates.Y] = pawn;
