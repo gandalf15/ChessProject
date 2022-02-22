@@ -1,5 +1,5 @@
-﻿using System;
-using SolarWinds.MSP.Chess.Enums;
+﻿using SolarWinds.MSP.Chess.Enums;
+using System;
 
 namespace SolarWinds.MSP.Chess
 {
@@ -66,7 +66,7 @@ namespace SolarWinds.MSP.Chess
             var piece = _pieces[from.X, from.Y];
             if (piece is null) return MoveResult.NotValidMove;
             var boardOccupancy = BoardOccupancyState();
-            var result = piece.ValidateMove(to,boardOccupancy);
+            var result = piece.ValidateMove(to, boardOccupancy);
             if (result is not MoveResult.Avalilable) return result;
             _pieces[from.X, from.Y] = null;
             _pieces[to.X, to.Y] = piece;
@@ -86,8 +86,8 @@ namespace SolarWinds.MSP.Chess
         {
             var state = new bool[_pieces.GetLength(0), _pieces.GetLength(1)];
             for (var x = 0; x < _pieces.GetLength(0); x++)
-            for (var y = 0; y < _pieces.GetLength(1); y++)
-                state[x, y] = _pieces[x, y] is not null; 
+                for (var y = 0; y < _pieces.GetLength(1); y++)
+                    state[x, y] = _pieces[x, y] is not null;
             return state;
         }
 
@@ -114,7 +114,7 @@ namespace SolarWinds.MSP.Chess
                     if (_numberOfBlackPawns >= MaxNumberOfPawns) return AddResult.MaxNumberReached;
                     if (coordinates.X == 7) return AddResult.NotValidPositionForThisPiece;
                     _numberOfBlackPawns++;
-                    pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y); 
+                    pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y);
                     _pieces[coordinates.X, coordinates.Y] = pawn;
                     return AddResult.Success;
                 default:

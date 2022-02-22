@@ -1,5 +1,5 @@
-﻿using System;
-using SolarWinds.MSP.Chess.Enums;
+﻿using SolarWinds.MSP.Chess.Enums;
+using System;
 
 namespace SolarWinds.MSP.Chess
 {
@@ -24,13 +24,13 @@ namespace SolarWinds.MSP.Chess
         {
             // Check if not moving sideways.
             if (Coordinates.Y != destination.Y) return MoveResult.NotValidMove;
-            
+
             // Determine the distance and direction.
             var distance = Coordinates.X - destination.X;
             var direction = "up";
             if (distance > 0) direction = "down";
             var absDistance = Math.Abs(Coordinates.X - destination.X);
-            
+
             // Check if moving the right direction.
             if (direction == "up" && PieceColor is ChessPieceColor.Black) return MoveResult.NotValidMove;
             if (direction == "down" && PieceColor is ChessPieceColor.White) return MoveResult.NotValidMove;

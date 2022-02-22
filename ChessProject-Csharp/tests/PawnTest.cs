@@ -1,6 +1,6 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SolarWinds.MSP.Chess.Enums;
+using System;
 
 namespace SolarWinds.MSP.Chess.Tests
 {
@@ -38,7 +38,7 @@ namespace SolarWinds.MSP.Chess.Tests
         [Test]
         public void Pawn_be_printed_nicely()
         {
-            var pawn = new Pawn(ChessPieceColor.White){Coordinates = new ChessCoordinates(1,2)};
+            var pawn = new Pawn(ChessPieceColor.White) { Coordinates = new ChessCoordinates(1, 2) };
             var expected = string.Format("Piece: Pawn{0}Coordinates: (X: 1, Y: 2){0}Piece Color: White", Environment.NewLine);
             Assert.AreEqual(expected, pawn.ToString());
             TestContext.Out.WriteLine(pawn);
@@ -153,7 +153,7 @@ namespace SolarWinds.MSP.Chess.Tests
         {
             var from = new ChessCoordinates(2, 0);
             var to = new ChessCoordinates(1, 0);
-            var pawn = new Pawn(color){Coordinates = from};
+            var pawn = new Pawn(color) { Coordinates = from };
             if (color is ChessPieceColor.Black)
             {
                 to = from;
@@ -166,7 +166,7 @@ namespace SolarWinds.MSP.Chess.Tests
         [TestCaseSource(typeof(AllInvalidDiagonalPawnMoves))]
         public void White_Pawn_should_return_NotValidMove_for_diagonal_movement(ChessCoordinates from, ChessCoordinates to)
         {
-            var pawn = new Pawn(ChessPieceColor.White){Coordinates = from};
+            var pawn = new Pawn(ChessPieceColor.White) { Coordinates = from };
             var result = pawn.ValidateMove(to, _boardOccupancy);
             Assert.AreEqual(MoveResult.NotValidMove, result);
         }

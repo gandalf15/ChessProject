@@ -170,7 +170,7 @@ namespace SolarWinds.MSP.Chess.Tests
                 }
             }
         }
-        
+
         [Test]
         [TestCaseSource(typeof(AllWhitePawnChessBoardCoordinates))]
         public void Should_be_able_to_Remove_White_Pawn_from_valid_Coordinates_for_White_Pawn(ChessCoordinates coordinates)

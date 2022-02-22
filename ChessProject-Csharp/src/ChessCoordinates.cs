@@ -9,7 +9,7 @@ namespace SolarWinds.MSP.Chess
     {
         private int _x;
         private int _y;
-        
+
         /// <summary>
         /// Creates ChessCoordinates
         /// </summary>
@@ -54,7 +54,7 @@ namespace SolarWinds.MSP.Chess
                 if (value is >= 0 and <= 7)
                 {
                     _y = value;
-                } 
+                }
                 else
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), value, "Y coordinate must be in the range from 0 to 7.");
