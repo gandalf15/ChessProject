@@ -1,22 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
 namespace SolarWinds.MSP.Chess
 {
+    /// <summary>
+    /// 2D chess coordinates from 0 up to 7 (8 positions) in both dimensions.
+    /// </summary>
     public class ChessCoordinates
     {
         private int _x;
         private int _y;
+        
+        /// <summary>
+        /// Creates ChessCoordinates
+        /// </summary>
+        /// <param name="x">X dimension or row.</param>
+        /// <param name="y">Y dimension or column.</param>
         public ChessCoordinates(int x, int y)
         {
             X = x;
             Y = y;
         }
 
+        /// <summary>
+        /// Gets X coordinate.
+        /// </summary>
         public int X
         {
 
@@ -35,6 +42,9 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
+        /// <summary>
+        /// Gets Y coordinate.
+        /// </summary>
         public int Y
         {
             get => _y;
@@ -52,6 +62,10 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
+        /// <summary>
+        /// Textual representation of a ChessCoordinates.
+        /// </summary>
+        /// <returns>String description of ChessCoordinates.</returns>
         public override string ToString() => $"(X: {X}, Y: {Y})";
     }
 }
