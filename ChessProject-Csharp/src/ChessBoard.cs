@@ -48,7 +48,7 @@ namespace SolarWinds.MSP.Chess
         /// Removes a ChessPiece from the ChessBoard.
         /// </summary>
         /// <param name="coordinates">ChessCoordinates from where to remove a ChessPiece.</param>
-        /// <returns>The removed ChessPiece.</returns>
+        /// <returns>The removed ChessPiece or null if no ChessPiece was at the provided coordinates.</returns>
         public ChessPiece Remove(ChessCoordinates coordinates)
         {
             var piece = _pieces[coordinates.X, coordinates.Y];
