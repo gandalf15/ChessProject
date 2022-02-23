@@ -20,7 +20,7 @@ namespace SolarWinds.MSP.Chess
         /// <param name="destination">ChessCoordinates destination of the move.</param>
         /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
         /// <returns>MoveResult</returns>
-        public override MoveResult ValidateMove(ChessCoordinates destination, bool[,] boardOccupancy)
+        public override MoveResult ValidateMove(ChessCoordinates destination, in bool[,] boardOccupancy)
         {
             // Check if not moving sideways.
             if (Coordinates.Y != destination.Y) return MoveResult.NotValidMove;
@@ -70,7 +70,7 @@ namespace SolarWinds.MSP.Chess
         /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
         /// <returns>CaptureResult</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override CaptureResult ValidateCapture(ChessCoordinates destination, bool[,] boardOccupancy)
+        public override CaptureResult ValidateCapture(ChessCoordinates destination, in bool[,] boardOccupancy)
         {
             throw new NotImplementedException("CaptureResult method for Pawn is not implemented.");
         }

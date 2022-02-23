@@ -33,7 +33,7 @@ namespace SolarWinds.MSP.Chess
         /// <param name="destination">ChessCoordinates destination of the move.</param>
         /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
         /// <returns></returns>
-        public abstract MoveResult ValidateMove(ChessCoordinates destination, bool[,] boardOccupancy);
+        public abstract MoveResult ValidateMove(ChessCoordinates destination, in bool[,] boardOccupancy);
 
         /// <summary>
         /// Abstract method that validates a capture move. 
@@ -41,7 +41,7 @@ namespace SolarWinds.MSP.Chess
         /// <param name="destination">ChessCoordinates destination of the capture move.</param>
         /// <param name="boardOccupancy">2D array that represents ChessBoard occupancy state.</param>
         /// <returns></returns>
-        public abstract CaptureResult ValidateCapture(ChessCoordinates destination, bool[,] boardOccupancy);
+        public abstract CaptureResult ValidateCapture(ChessCoordinates destination, in bool[,] boardOccupancy);
 
         /// <summary>
         /// Textual description of a ChessPiece instance.

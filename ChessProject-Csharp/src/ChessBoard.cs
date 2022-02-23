@@ -12,6 +12,7 @@ namespace SolarWinds.MSP.Chess
         public const int MaxBoardHeight = 8;
         public const int MaxNumberOfPawns = 8;
         private readonly ChessPiece[,] _pieces;
+        private readonly bool[,] _occupancyState;
         private int _numberOfWhitePawns = 0;
         private int _numberOfBlackPawns = 0;
 
@@ -21,6 +22,7 @@ namespace SolarWinds.MSP.Chess
         public ChessBoard()
         {
             _pieces = new ChessPiece[MaxBoardWidth, MaxBoardHeight];
+            _occupancyState = new bool[MaxBoardWidth, MaxBoardHeight];
         }
 
         /// <summary>
@@ -51,6 +53,7 @@ namespace SolarWinds.MSP.Chess
         {
             var piece = _pieces[coordinates.X, coordinates.Y];
             _pieces[coordinates.X, coordinates.Y] = null;
+            _occupancyState[coordinates.X, coordinates.Y] = false;
             piece.Coordinates = null;
             return piece;
         }
@@ -65,11 +68,12 @@ namespace SolarWinds.MSP.Chess
         {
             var piece = _pieces[from.X, from.Y];
             if (piece is null) return MoveResult.NotValidMove;
-            var boardOccupancy = BoardOccupancyState();
-            var result = piece.ValidateMove(to, boardOccupancy);
+            var result = piece.ValidateMove(to, _occupancyState);
             if (result is not MoveResult.Avalilable) return result;
             _pieces[from.X, from.Y] = null;
+            _occupancyState[from.X, from.Y] = false;
             _pieces[to.X, to.Y] = piece;
+            _occupancyState[to.X, to.Y] = true;
             piece.Coordinates.X = to.X;
             piece.Coordinates.Y = to.Y;
             return MoveResult.Moved;
@@ -80,16 +84,7 @@ namespace SolarWinds.MSP.Chess
         /// </summary>
         /// <param name="coordinates">ChessCoordinates to check.</param>
         /// <returns>True if occupied.</returns>
-        public bool IsOccupied(ChessCoordinates coordinates) => _pieces[coordinates.X, coordinates.Y] is not null;
-
-        private bool[,] BoardOccupancyState()
-        {
-            var state = new bool[_pieces.GetLength(0), _pieces.GetLength(1)];
-            for (var x = 0; x < _pieces.GetLength(0); x++)
-                for (var y = 0; y < _pieces.GetLength(1); y++)
-                    state[x, y] = _pieces[x, y] is not null;
-            return state;
-        }
+        public bool IsOccupied(ChessCoordinates coordinates) => _occupancyState[coordinates.X, coordinates.Y];
 
         /// <summary>
         /// Adds Pawn to a ChessBoard.
@@ -108,6 +103,7 @@ namespace SolarWinds.MSP.Chess
                     _numberOfWhitePawns++;
                     pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y);
                     _pieces[coordinates.X, coordinates.Y] = pawn;
+                    _occupancyState[coordinates.X, coordinates.Y] = true;
                     return AddResult.Success;
 
                 case ChessPieceColor.Black:
@@ -116,6 +112,7 @@ namespace SolarWinds.MSP.Chess
                     _numberOfBlackPawns++;
                     pawn.Coordinates = new ChessCoordinates(coordinates.X, coordinates.Y);
                     _pieces[coordinates.X, coordinates.Y] = pawn;
+                    _occupancyState[coordinates.X, coordinates.Y] = true;
                     return AddResult.Success;
                 default:
                     throw new ArgumentException("The pawn is of an unknown color.", nameof(pawn));
